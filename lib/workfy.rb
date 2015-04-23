@@ -5,7 +5,9 @@ module Workfy
   class Basement #:nodoc:
     include HTTParty
 
-    base_uri "#{ENV['WORKFY_API_HOST'] || 'workfy-api.herokuapp.com'}/api/v1/jobs"
+    def initialize
+      self.class.base_uri "#{ENV['WORKFY_API_HOST'] || 'workfy-api.herokuapp.com'}/api/v1/jobs"
+    end
 
     def web2pdf content_url, callback_url
       response = self.class.get("/web2pdf.json", {
@@ -14,7 +16,6 @@ module Workfy
           callback_url: callback_url
         }
       })
-
       response
     end
   end
